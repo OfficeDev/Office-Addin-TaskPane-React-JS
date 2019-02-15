@@ -18,9 +18,9 @@ module.exports = (env, options) => {
     ],
     taskpane: [
         'react-hot-loader/patch',
-        './src/taskpane/index.tsx',
+        './src/taskpane/index.js',
     ],
-    ribbon: './src/ribbon/ribbon.ts'
+    ribbon: './src/ribbon/ribbon.js'
     },
     resolve: {
       extensions: [".ts", ".tsx", ".html", ".js"]
@@ -28,13 +28,12 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
+          test: /\.js?$/,
           use: [
               'react-hot-loader/webpack',
-              'ts-loader'
-          ],
-          exclude: /node_modules/
-        },
+              'babel-loader',
+          ]
+          },
         {
           test: /\.css$/,
           use: ['style-loader', 'css-loader']

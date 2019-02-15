@@ -1,12 +1,6 @@
 import * as React from 'react';
 
-export interface HeaderProps {
-    title: string;
-    logo: string;
-    message: string;
-}
-
-export default class Header extends React.Component<HeaderProps> {
+export default class Header extends React.Component {
     render() {
         const {
             title,

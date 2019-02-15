@@ -6,16 +6,7 @@ import Progress from './Progress';
 
 import * as OfficeHelpers from '@microsoft/office-js-helpers';
 
-export interface AppProps {
-    title: string;
-    isOfficeInitialized: boolean;
-}
-
-export interface AppState {
-    listItems: HeroListItem[];
-}
-
-export default class App extends React.Component<AppProps, AppState> {
+export default class App extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
