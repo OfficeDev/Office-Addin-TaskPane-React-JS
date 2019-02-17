@@ -17,8 +17,8 @@ module.exports = (env, options) => {
         'office-ui-fabric-react'
     ],
     taskpane: [
-        'react-hot-loader/patch',
-        './src/taskpane/index.js',
+      'react-hot-loader/patch',
+      './src/taskpane/index.js',
     ],
     ribbon: './src/ribbon/ribbon.js'
     },
@@ -32,8 +32,9 @@ module.exports = (env, options) => {
           use: [
               'react-hot-loader/webpack',
               'babel-loader',
-          ]
-          },
+          ],
+          exclude: /node_modules/
+        },
         {
           test: /\.css$/,
           use: ['style-loader', 'css-loader']
@@ -59,7 +60,7 @@ module.exports = (env, options) => {
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
           template: './src/taskpane/taskpane.html',
-          chunks: ['taskpane', 'vendor', 'polyfills']
+          chunks: ['taskpane', 'vendor']
       }),
       new HtmlWebpackPlugin({
           filename: "ribbon.html",
