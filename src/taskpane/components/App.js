@@ -3,7 +3,6 @@ import { Button, ButtonType } from 'office-ui-fabric-react';
 import Header from './Header';
 import HeroList, { HeroListItem } from './HeroList';
 import Progress from './Progress';
-
 import * as OfficeHelpers from '@microsoft/office-js-helpers';
 
 export default class App extends React.Component {

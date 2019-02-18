@@ -10,12 +10,13 @@ module.exports = (env, options) => {
   const config = {
     devtool: "source-map",
     entry: {
-      vendor: [
+    vendor: [
         'react',
         'react-dom',
         'core-js',
         'office-ui-fabric-react'
     ],
+    polyfill: 'babel-polyfill',
     taskpane: [
       'react-hot-loader/patch',
       './src/taskpane/index.js',
@@ -60,7 +61,7 @@ module.exports = (env, options) => {
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
           template: './src/taskpane/taskpane.html',
-          chunks: ['taskpane', 'vendor']
+          chunks: ['taskpane', 'vendor', 'polyfill']
       }),
       new HtmlWebpackPlugin({
           filename: "ribbon.html",
