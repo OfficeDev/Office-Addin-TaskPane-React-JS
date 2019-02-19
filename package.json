@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OfficeDev/Office-Addin-TaskPane-React.git"
+    "url": "https://github.com/OfficeDev/Office-Addin-TaskPane-React-JS.git"
   },
   "license": "MIT",
   "config": {
@@ -48,6 +48,12 @@
     "@types/react-hot-loader": "^4.1.0",
     "@types/webpack": "4.4.22",
     "@types/webpack-dev-server": "3.1.1",
+    "@babel/core": "7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "babel-polyfill": "^6.26.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "8.0.5",
     "clean-webpack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "0.27.3",
@@ -64,8 +70,6 @@
     "react-hot-loader": "^3.1.3",
     "source-map-loader": "^0.2.4",
     "style-loader": "0.23.0",
-    "ts-loader": "^5.3.1",
-    "typescript": "^3.3.3",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
