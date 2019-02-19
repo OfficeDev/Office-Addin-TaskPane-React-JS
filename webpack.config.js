@@ -29,7 +29,7 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
-          test: /\.js?$/,
+          test: /\.jsx?$/,
           use: [
               'react-hot-loader/webpack',
               'babel-loader',
