@@ -10,17 +10,18 @@ module.exports = (env, options) => {
   const config = {
     devtool: "source-map",
     entry: {
-      vendor: [
+    vendor: [
         'react',
         'react-dom',
         'core-js',
         'office-ui-fabric-react'
     ],
+    polyfill: 'babel-polyfill',
     taskpane: [
-        'react-hot-loader/patch',
-        './src/taskpane/index.tsx',
+      'react-hot-loader/patch',
+      './src/taskpane/index.js',
     ],
-    ribbon: './src/ribbon/ribbon.ts'
+    ribbon: './src/ribbon/ribbon.js'
     },
     resolve: {
       extensions: [".ts", ".tsx", ".html", ".js"]
@@ -28,10 +29,10 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
+          test: /\.jsx?$/,
           use: [
               'react-hot-loader/webpack',
-              'ts-loader'
+              'babel-loader',
           ],
           exclude: /node_modules/
         },
@@ -60,7 +61,7 @@ module.exports = (env, options) => {
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
           template: './src/taskpane/taskpane.html',
-          chunks: ['taskpane', 'vendor', 'polyfills']
+          chunks: ['taskpane', 'vendor', 'polyfill']
       }),
       new HtmlWebpackPlugin({
           filename: "ribbon.html",

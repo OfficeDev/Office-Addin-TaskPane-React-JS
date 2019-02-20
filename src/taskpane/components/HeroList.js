@@ -1,16 +1,6 @@
 import * as React from 'react';
 
-export interface HeroListItem {
-    icon: string;
-    primaryText: string;
-}
-
-export interface HeroListProps {
-    message: string;
-    items: HeroListItem[]
-}
-
-export default class HeroList extends React.Component<HeroListProps> {
+export default class HeroList extends React.Component {
     render() {
         const {
             children,
