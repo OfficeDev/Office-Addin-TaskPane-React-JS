@@ -41,10 +41,6 @@ module.exports = (env, options) => {
           use: ['style-loader', 'css-loader']
         },
         {
-          test: /\.less$/,
-          use: ['style-loader', 'css-loader', 'less-loader']
-        },
-        {
           test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
           use: {
               loader: 'file-loader',
@@ -57,6 +53,12 @@ module.exports = (env, options) => {
     },    
     plugins: [
       new CleanWebpackPlugin(dev ? [] : ["dist"]),
+      new CopyWebpackPlugin([
+        {
+          to: "taskpane.css",
+          from: "./src/taskpane/taskpane.css"
+        }
+      ]),
       new ExtractTextPlugin('[name].[hash].css'),
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
