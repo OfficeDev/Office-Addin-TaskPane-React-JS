@@ -1,11 +1,11 @@
+const devCerts = require("office-addin-dev-certs");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require('webpack');
 
-module.exports = (env, options) => {
+module.exports = async (env, options)  => {
   const dev = options.mode === "development";
   const config = {
     devtool: "source-map",
@@ -21,7 +21,7 @@ module.exports = (env, options) => {
       'react-hot-loader/patch',
       './src/taskpane/index.js',
     ],
-    ribbon: './src/ribbon/ribbon.js'
+    commands: './src/commands/commands.js'
     },
     resolve: {
       extensions: [".ts", ".tsx", ".html", ".js"]
@@ -66,9 +66,9 @@ module.exports = (env, options) => {
           chunks: ['taskpane', 'vendor', 'polyfill']
       }),
       new HtmlWebpackPlugin({
-          filename: "ribbon.html",
-          template: "./src/ribbon/ribbon.html",
-          chunks: ["ribbon"]
+          filename: "commands.html",
+          template: "./src/commands/commands.html",
+          chunks: ["commands"]
         }),
       new CopyWebpackPlugin([
           {
@@ -85,11 +85,7 @@ module.exports = (env, options) => {
       headers: {
         "Access-Control-Allow-Origin": "*"
       },
-      https: {
-        key: fs.readFileSync("./certs/server.key"),
-        cert: fs.readFileSync("./certs/server.crt"),
-        ca: fs.readFileSync("./certs/ca.crt")
-      },
+      https: await devCerts.getHttpsServerOptions(),
       port: 3000
     }
   };
