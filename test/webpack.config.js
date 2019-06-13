@@ -11,6 +11,7 @@ module.exports = async (env, options) => {
     const config = {
         devtool: "source-map",
         entry: {
+            polyfill: "babel-polyfill",
             vendor: [
                 'react',
                 'react-dom',
@@ -31,6 +32,14 @@ module.exports = async (env, options) => {
         },
         module: {
             rules: [
+                {
+                    test: /\.jsx?$/,
+                    use: [
+                        'react-hot-loader/webpack',
+                        'babel-loader',
+                    ],
+                    exclude: /node_modules/
+                },
                 {
                     test: /\.tsx?$/,
                     use: [
@@ -66,7 +75,7 @@ module.exports = async (env, options) => {
             new HtmlWebpackPlugin({
                 filename: "taskpane.html",
                 template: path.resolve(__dirname, './src/test-taskpane.html'),
-                chunks: ['taskpane', 'vendor', 'polyfills']
+                chunks: ['taskpane', 'vendor', 'polyfill']
             }),
             new CopyWebpackPlugin([
                 {

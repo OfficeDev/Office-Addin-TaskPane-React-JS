@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, ButtonType } from 'office-ui-fabric-react';
 import Header from '../../src/taskpane/components/Header';
-import HeroList, { HeroListItem } from '../../src/taskpane/components/HeroList';
+import HeroList from '../../src/taskpane/components/HeroList';
 import Progress from '../../src/taskpane/components/Progress';
 import * as excel from "../../src/taskpane/components/excel.App";
 import { pingTestServer, sendTestResults } from "office-addin-test-helpers";
@@ -15,7 +15,7 @@ export interface AppProps {
 }
 
 export interface AppState {
-    listItems: HeroListItem[];
+    listItems: any;
 }
 
 export default class App extends React.Component<AppProps, AppState> {
