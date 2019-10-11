@@ -61,7 +61,7 @@ export default class App extends React.Component {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   render() {
     const { title, isOfficeInitialized } = this.props;
