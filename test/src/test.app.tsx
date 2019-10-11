@@ -9,8 +9,8 @@ import { pingTestServer } from "office-addin-test-helpers";
 const port: number = 4201;
 
 export interface AppProps {
-    title: string;
-    isOfficeInitialized: boolean;
+  title: string;
+  isOfficeInitialized: boolean;
 }
 
 export interface AppState {
