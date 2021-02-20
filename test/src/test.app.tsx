@@ -4,6 +4,7 @@ import Header from '../../src/taskpane/components/Header';
 import HeroList from '../../src/taskpane/components/HeroList';
 import Progress from '../../src/taskpane/components/Progress';
 import * as excel from "./test.excel.app";
+import * as powerpoint from "./test.powerpoint.app";
 import * as word from "./test.word.app";
 import { pingTestServer } from "office-addin-test-helpers";
 const port: number = 4201;
@@ -24,15 +25,19 @@ export default class App extends React.Component<AppProps, AppState> {
             listItems: []
         };
         Office.onReady(async (info) => {
-            if (info.host === Office.HostType.Excel || info.host === Office.HostType.Word) {
+            if (info.host === Office.HostType.Excel || info.host === Office.HostType.PowerPoint || info.host === Office.HostType.Word) {
                 const testServerResponse: object = await pingTestServer(port);
                 if (testServerResponse["status"] == 200) {
-                    if (info.host === Office.HostType.Excel) {
-                        const excelApp = new excel.default(this.props, this.context);
-                        return excelApp.runTest();
-                    } else {
-                        const wordApp = new word.default(this.props, this.context);
-                        return wordApp.runTest();
+                    switch (info.host) {
+                        case Office.HostType.Excel:
+                            const excelApp = new excel.default(this.props, this.context);
+                            return excelApp.runTest();
+                        case Office.HostType.PowerPoint:
+                            const powerpointApp = new powerpoint.default(this.props, this.context);
+                            return powerpointApp.runTest();
+                        case Office.HostType.Word:
+                            const wordApp = new word.default(this.props, this.context);
+                            return wordApp.runTest();
                     }
                 }
             }
@@ -57,7 +62,7 @@ export default class App extends React.Component<AppProps, AppState> {
             ]
         });
     }
-    click = async () => {
+    click = async () => { 
     }
 
     render() {
