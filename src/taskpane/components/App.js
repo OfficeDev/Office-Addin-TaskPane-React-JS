@@ -15,7 +15,7 @@ export default class App extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      listItems: []
+      listItems: [],
     };
   }
 
@@ -24,17 +24,17 @@ export default class App extends React.Component {
       listItems: [
         {
           icon: "Ribbon",
-          primaryText: "Achieve more with Office integration"
+          primaryText: "Achieve more with Office integration",
         },
         {
           icon: "Unlock",
-          primaryText: "Unlock features and functionality"
+          primaryText: "Unlock features and functionality",
         },
         {
           icon: "Design",
-          primaryText: "Create and visualize like a pro"
-        }
-      ]
+          primaryText: "Create and visualize like a pro",
+        },
+      ],
     });
   }
 

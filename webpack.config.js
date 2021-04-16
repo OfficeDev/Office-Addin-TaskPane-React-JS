@@ -14,18 +14,18 @@ module.exports = async (env, options)  => {
   const config = {
     devtool: "source-map",
     entry: {
-    vendor: [
+      polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
+      vendor: [
         'react',
         'react-dom',
         'core-js',
         'office-ui-fabric-react'
-    ],
-    polyfill: 'babel-polyfill',
-    taskpane: [
-      'react-hot-loader/patch',
-      './src/taskpane/index.js',
-    ],
-    commands: './src/commands/commands.js'
+      ],
+      taskpane: [
+        'react-hot-loader/patch',
+        './src/taskpane/index.js',
+      ],
+      commands: './src/commands/commands.js'
     },
     resolve: {
       extensions: [".ts", ".tsx", ".html", ".js"]
@@ -35,8 +35,13 @@ module.exports = async (env, options)  => {
         {
           test: /\.jsx?$/,
           use: [
-              'react-hot-loader/webpack',
-              'babel-loader',
+            'react-hot-loader/webpack',
+            {
+              loader: "babel-loader",
+              options: {
+                presets: ["@babel/preset-env"]
+              },
+            }
           ],
           exclude: /node_modules/
         },
