@@ -11,7 +11,7 @@ module.exports = async (env, options) => {
     const config = {
         devtool: "source-map",
         entry: {
-            polyfill: "babel-polyfill",
+            polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
             vendor: [
                 'react',
                 'react-dom',
@@ -37,7 +37,12 @@ module.exports = async (env, options) => {
                     test: /\.jsx?$/,
                     use: [
                         'react-hot-loader/webpack',
-                        'babel-loader',
+                        {
+                            loader: "babel-loader",
+                            options: {
+                                presets: ["@babel/preset-env"]
+                            },
+                        }
                     ],
                     exclude: /node_modules/
                 },
