@@ -1,5 +1,5 @@
 import * as React from "react";
-/* global PropTypes */
+import PropTypes from "prop-types";
 
 export default class HeroList extends React.Component {
   render() {
@@ -20,3 +20,9 @@ export default class HeroList extends React.Component {
     );
   }
 }
+
+HeroList.propTypes = {
+  children: PropTypes.node,
+  items: PropTypes.array,
+  message: PropTypes.string,
+};

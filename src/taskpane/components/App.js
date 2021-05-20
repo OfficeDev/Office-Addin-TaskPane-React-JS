@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import { Button, ButtonType } from "office-ui-fabric-react";
 import Header from "./Header";
 import HeroList from "./HeroList";
@@ -9,7 +10,7 @@ import * as outlook from "./Outlook.App";
 import * as powerpoint from "./PowerPoint.App";
 import * as project from "./Project.App";
 import * as word from "./Word.App";
-/* global Office, PropTypes */
+/* global Office */
 
 export default class App extends React.Component {
   constructor(props, context) {
@@ -96,3 +97,8 @@ export default class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  title: PropTypes.string,
+  isOfficeInitialized: PropTypes.bool,
+};

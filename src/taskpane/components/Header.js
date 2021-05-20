@@ -1,5 +1,5 @@
 import * as React from "react";
-/* global PropTypes */
+import PropTypes from "prop-types";
 
 export default class Header extends React.Component {
   render() {
@@ -13,3 +13,9 @@ export default class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  title: PropTypes.string,
+  logo: PropTypes.string,
+  message: PropTypes.string,
+};
