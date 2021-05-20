@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Spinner, SpinnerType } from "office-ui-fabric-react";
-/* global Spinner */
+/* global PropTypes */
 
 export default class Progress extends React.Component {
   render() {

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Button, ButtonType } from "office-ui-fabric-react";
 import Header from "./Header";
-import HeroList, { HeroListItem } from "./HeroList";
+import HeroList from "./HeroList";
 import Progress from "./Progress";
-/* global Button, console, Header, HeroList, HeroListItem, Office, Progress */
+/* global console, Office, PropTypes */
 
 export default class App extends React.Component {
   constructor(props, context) {

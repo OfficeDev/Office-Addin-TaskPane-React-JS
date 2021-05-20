@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button, ButtonType } from "office-ui-fabric-react";
 import Header from "./Header";
-import HeroList, { HeroListItem } from "./HeroList";
+import HeroList from "./HeroList";
 import Progress from "./Progress";
 import * as excel from "./Excel.App";
 import * as onenote from "./OneNote.App";
@@ -9,7 +9,7 @@ import * as outlook from "./Outlook.App";
 import * as powerpoint from "./PowerPoint.App";
 import * as project from "./Project.App";
 import * as word from "./Word.App";
-/* global Button, Header, HeroList, HeroListItem, Office */
+/* global Office, PropTypes */
 
 export default class App extends React.Component {
   constructor(props, context) {

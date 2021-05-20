@@ -1,4 +1,5 @@
 import * as React from "react";
+/* global PropTypes */
 
 export default class Header extends React.Component {
   render() {

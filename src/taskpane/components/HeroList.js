@@ -1,4 +1,5 @@
 import * as React from "react";
+/* global PropTypes */
 
 export default class HeroList extends React.Component {
   render() {
