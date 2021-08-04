@@ -29,15 +29,15 @@ module.exports = async (env, options) => {
         {
           test: /\.jsx?$/,
           use: [
-            'react-hot-loader/webpack',
+            "react-hot-loader/webpack",
             {
               loader: "babel-loader",
               options: {
-                presets: ["@babel/preset-env"]
+                presets: ["@babel/preset-env"],
               },
-            }
+            },
           ],
-          exclude: /node_modules/
+          exclude: /node_modules/,
         },
         {
           test: /\.css$/,
@@ -77,7 +77,7 @@ module.exports = async (env, options) => {
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
         template: "./src/taskpane/taskpane.html",
-        chunks: ["taskpane", "vendor", "polyfills"],
+        chunks: ["taskpane", "vendor", "polyfill"],
       }),
       new HtmlWebpackPlugin({
         filename: "commands.html",
