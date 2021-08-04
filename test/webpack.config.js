@@ -80,7 +80,7 @@ module.exports = async (env, options) => {
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
         template: path.resolve(__dirname, "./src/test-taskpane.html"),
-        chunks: ["taskpane", "vendor", "polyfills"],
+        chunks: ["taskpane", "vendor", "polyfill"],
       }),
       new webpack.ProvidePlugin({
         Promise: ["es6-promise", "Promise"],
