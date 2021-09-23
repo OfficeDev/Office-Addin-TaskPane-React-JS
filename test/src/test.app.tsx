@@ -8,7 +8,7 @@ import * as powerpoint from "./test.powerpoint.app";
 import * as word from "./test.word.app";
 import { pingTestServer } from "office-addin-test-helpers";
 
-/* global Office */
+/* global Office, require */
 const port: number = 4201;
 
 export interface AppProps {
@@ -35,15 +35,18 @@ export default class App extends React.Component<AppProps, AppState> {
         const testServerResponse: object = await pingTestServer(port);
         if (testServerResponse["status"] == 200) {
           switch (info.host) {
-            case Office.HostType.Excel:
+            case Office.HostType.Excel: {
               const excelApp = new excel.default(this.props, this.context);
               return excelApp.runTest();
-            case Office.HostType.PowerPoint:
+            }
+            case Office.HostType.PowerPoint: {
               const powerpointApp = new powerpoint.default(this.props, this.context);
               return powerpointApp.runTest();
-            case Office.HostType.Word:
+            }
+            case Office.HostType.Word: {
               const wordApp = new word.default(this.props, this.context);
               return wordApp.runTest();
+            }
           }
         }
       }
@@ -75,13 +78,17 @@ export default class App extends React.Component<AppProps, AppState> {
 
     if (!isOfficeInitialized) {
       return (
-        <Progress title={title} logo="assets/logo-filled.png" message="Please sideload your addin to see app body." />
+        <Progress
+          title={title}
+          logo={require("./../../assets/logo-filled.png")}
+          message="Please sideload your addin to see app body."
+        />
       );
     }
 
     return (
       <div className="ms-welcome">
-        <Header logo="assets/logo-filled.png" title={this.props.title} message="Welcome" />
+        <Header logo={require("./../../assets/logo-filled.png")} title={this.props.title} message="Welcome" />
         <HeroList message="Discover what Office Add-ins can do for you today!" items={this.state.listItems}>
           <p className="ms-font-l">
             Modify the source files, then click <b>Run</b>.

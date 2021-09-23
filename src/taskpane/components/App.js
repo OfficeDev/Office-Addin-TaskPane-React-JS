@@ -10,7 +10,8 @@ import * as outlook from "./Outlook.App";
 import * as powerpoint from "./PowerPoint.App";
 import * as project from "./Project.App";
 import * as word from "./Word.App";
-/* global Office */
+
+/* global Office, require */
 
 export default class App extends React.Component {
   constructor(props, context) {
@@ -73,13 +74,17 @@ export default class App extends React.Component {
 
     if (!isOfficeInitialized) {
       return (
-        <Progress title={title} logo="assets/logo-filled.png" message="Please sideload your addin to see app body." />
+        <Progress
+          title={title}
+          logo={require("./../../../assets/logo-filled.png")}
+          message="Please sideload your addin to see app body."
+        />
       );
     }
 
     return (
       <div className="ms-welcome">
-        <Header logo="assets/logo-filled.png" title={this.props.title} message="Welcome" />
+        <Header logo={require("./../../../assets/logo-filled.png")} title={this.props.title} message="Welcome" />
         <HeroList message="Discover what Office Add-ins can do for you today!" items={this.state.listItems}>
           <p className="ms-font-l">
             Modify the source files, then click <b>Run</b>.
