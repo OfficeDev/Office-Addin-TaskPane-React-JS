@@ -1,10 +1,15 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Button, ButtonType } from "office-ui-fabric-react";
+import { DefaultButton } from "@fluentui/react";
 import Header from "./Header";
 import HeroList from "./HeroList";
 import Progress from "./Progress";
-/* global console, Office */
+// images references in the manifest
+import "../../../assets/icon-16.png";
+import "../../../assets/icon-32.png";
+import "../../../assets/icon-80.png";
+
+/* global console, Office, require */
 
 export default class App extends React.Component {
   constructor(props, context) {
@@ -55,25 +60,24 @@ export default class App extends React.Component {
 
     if (!isOfficeInitialized) {
       return (
-        <Progress title={title} logo="assets/logo-filled.png" message="Please sideload your addin to see app body." />
+        <Progress
+          title={title}
+          logo={require("./../../../assets/logo-filled.png")}
+          message="Please sideload your addin to see app body."
+        />
       );
     }
 
     return (
       <div className="ms-welcome">
-        <Header logo="assets/logo-filled.png" title={this.props.title} message="Welcome" />
+        <Header logo={require("./../../../assets/logo-filled.png")} title={this.props.title} message="Welcome" />
         <HeroList message="Discover what Office Add-ins can do for you today!" items={this.state.listItems}>
           <p className="ms-font-l">
             Modify the source files, then click <b>Run</b>.
           </p>
-          <Button
-            className="ms-welcome__action"
-            buttonType={ButtonType.hero}
-            iconProps={{ iconName: "ChevronRight" }}
-            onClick={this.click}
-          >
+          <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={this.click}>
             Run
-          </Button>
+          </DefaultButton>
         </HeroList>
       </div>
     );

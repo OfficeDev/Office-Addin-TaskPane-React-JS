@@ -1,9 +1,6 @@
 /* eslint-disable no-undef */
 
 const devCerts = require("office-addin-dev-certs");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const ExtractCSSPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
@@ -25,6 +22,7 @@ module.exports = async (env, options) => {
     output: {
       path: path.resolve(__dirname, "testBuild"),
       devtoolModuleFilenameTemplate: "webpack:///[resource-path]?[loaders]",
+      clean: true,
     },
     resolve: {
       extensions: [".ts", ".tsx", ".html", ".js"],
@@ -55,14 +53,15 @@ module.exports = async (env, options) => {
           exclude: /node_modules/,
         },
         {
-          test: /\.css$/,
-          use: [ExtractCSSPlugin.loader, "css-loader"],
+          test: /\.html$/,
+          exclude: /node_modules/,
+          use: "html-loader",
         },
         {
           test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-          loader: "file-loader",
-          options: {
-            name: "[path][name].[ext]",
+          type: "asset/resource",
+          generator: {
+            filename: "assets/[name][ext][query]",
           },
         },
       ],
@@ -72,20 +71,6 @@ module.exports = async (env, options) => {
         Promise: ["es6-promise", "Promise"],
         process: "process/browser",
       }),
-      new CleanWebpackPlugin(),
-      new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: path.resolve(__dirname, "./../src/taskpane/taskpane.css"),
-            to: "taskpane.css",
-          },
-          {
-            from: "./assets",
-            to: "assets",
-          },
-        ],
-      }),
-      new ExtractCSSPlugin({ filename: "[name].[hash].css" }),
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
         template: path.resolve(__dirname, "./src/test-taskpane.html"),
@@ -97,7 +82,7 @@ module.exports = async (env, options) => {
     ],
     devServer: {
       static: {
-        directory: path.join(__dirname, "testBuild"),
+        directory: "testBuild",
       },
       headers: {
         "Access-Control-Allow-Origin": "*",
