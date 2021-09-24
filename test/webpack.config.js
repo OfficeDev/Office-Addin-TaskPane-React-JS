@@ -53,6 +53,11 @@ module.exports = async (env, options) => {
           exclude: /node_modules/,
         },
         {
+          test: /\.html$/,
+          exclude: /node_modules/,
+          use: "html-loader",
+        },
+        {
           test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
           type: "asset/resource",
           generator: {
