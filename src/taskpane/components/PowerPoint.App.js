@@ -1,9 +1,13 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Button, ButtonType } from "office-ui-fabric-react";
+import { DefaultButton } from "@fluentui/react";
 import Header from "./Header";
 import HeroList from "./HeroList";
 import Progress from "./Progress";
+// images references in the manifest
+import "../../../assets/icon-16.png";
+import "../../../assets/icon-32.png";
+import "../../../assets/icon-80.png";
 
 /* global console, Office, require */
 
@@ -71,14 +75,9 @@ export default class App extends React.Component {
           <p className="ms-font-l">
             Modify the source files, then click <b>Run</b>.
           </p>
-          <Button
-            className="ms-welcome__action"
-            buttonType={ButtonType.hero}
-            iconProps={{ iconName: "ChevronRight" }}
-            onClick={this.click}
-          >
+          <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={this.click}>
             Run
-          </Button>
+          </DefaultButton>
         </HeroList>
       </div>
     );
