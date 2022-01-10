@@ -4,9 +4,10 @@ import { initializeIcons } from "@fluentui/react/lib/Icons";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
+/* global document, Office, module, require */
+
 initializeIcons();
 
-/* global document, Office, module, require */
 const title = "Contoso Task Pane Add-in";
 let isOfficeInitialized = false;
 
