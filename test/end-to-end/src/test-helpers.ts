@@ -1,5 +1,4 @@
 import * as childProcess from "child_process";
-import find = require("find-process");
 
 /* global Excel, process, Promise, setTimeout */
 
