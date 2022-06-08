@@ -35,7 +35,7 @@ async function modifyProjectForSingleHost(host) {
 }
 
 async function convertProjectToSingleHost(host) {
-  // copy host-specific manifest over manifest.xml  
+  // copy host-specific manifest over manifest.xml
   const manifestContent = await readFileAsync(`./manifest.${host}.xml`, "utf8");
   await writeFileAsync(`./manifest.xml`, manifestContent);
 
