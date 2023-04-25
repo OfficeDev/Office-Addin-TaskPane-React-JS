@@ -80,7 +80,7 @@
     "office-addin-test-helpers": "^1.4.5",
     "office-addin-test-server": "^1.4.8",
     "os-browserify": "^0.3.0",
-    "postcss-loader": "^4.0.0",
+    "postcss-loader": "^7.2.4",
     "process": "^0.11.10",
     "react-hot-loader": "^4.12.6",
     "source-map-loader": "^3.0.0",
