@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import { tokens, makeStyles } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
@@ -47,6 +48,11 @@ const HeroList = (props) => {
       <ul className={styles.list}>{listItems}</ul>
     </div>
   );
+};
+
+HeroList.propTypes = {
+  items: PropTypes.array,
+  message: PropTypes.string,
 };
 
 export default HeroList;

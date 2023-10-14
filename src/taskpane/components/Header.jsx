@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import { Image, tokens, makeStyles } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
@@ -27,6 +28,12 @@ const Header = (props) => {
       <h1 className={styles.message}>{message}</h1>
     </section>
   );
+};
+
+Header.propTypes = {
+  title: PropTypes.string,
+  logo: PropTypes.string,
+  message: PropTypes.string,
 };
 
 export default Header;

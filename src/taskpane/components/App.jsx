@@ -1,13 +1,14 @@
 import * as React from "react";
+import PropTypes from "prop-types";
 import Header from "./Header";
-import HeroList, { HeroListItem } from "./HeroList";
+import HeroList from "./HeroList";
 import TextInsertion from "./TextInsertion";
 import { Ribbon24Regular, LockOpen24Regular, DesignIdeas24Regular } from "@fluentui/react-icons";
 
 const App = (props) => {
   // The list items are static and won't change at runtime,
   // so this should be an ordinary const, not a part of state.
-  const listItems= [
+  const listItems = [
     {
       icon: <Ribbon24Regular />,
       primaryText: "Achieve more with Office integration",
@@ -29,6 +30,10 @@ const App = (props) => {
       <TextInsertion />
     </div>
   );
+};
+
+App.propTypes = {
+  title: PropTypes.string,
 };
 
 export default App;
