@@ -123,7 +123,7 @@ async function updateLaunchJsonFile() {
 }
 
 function getHostName(host) {
-  switch(host) {
+  switch (host) {
     case "excel":
       return "Excel";
     case "onenote":
