@@ -9,7 +9,7 @@ import { Ribbon24Regular, LockOpen24Regular, DesignIdeas24Regular } from "@fluen
 const useStyles = makeStyles({
   root: {
     minHeight: "100vh",
-  }
+  },
 });
 
 const App = (props) => {
