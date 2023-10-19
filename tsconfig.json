@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "allowUnusedLabels": false,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,

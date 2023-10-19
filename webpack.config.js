@@ -19,29 +19,36 @@ module.exports = async (env, options) => {
     devtool: "source-map",
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
-      vendor: ["react", "react-dom", "core-js", "@fluentui/react"],
-      taskpane: ["react-hot-loader/patch", "./src/taskpane/index.js", "./src/taskpane/taskpane.html"],
+      vendor: ["react", "react-dom", "core-js", "@fluentui/react-components", "@fluentui/react-icons"],
+      taskpane: ["./src/taskpane/index.jsx", "./src/taskpane/taskpane.html"],
       commands: "./src/commands/commands.js",
     },
     output: {
       clean: true,
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".html", ".js"],
+      extensions: [".html", ".js", ".jsx"],
     },
     module: {
       rules: [
         {
           test: /\.jsx?$/,
-          use: [
-            "react-hot-loader/webpack",
-            {
-              loader: "babel-loader",
-              options: {
-                presets: ["@babel/preset-env"],
-              },
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
             },
-          ],
+          },
+          exclude: /node_modules/,
+        },
+        {
+          test: /\.js$/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+            },
+          },
           exclude: /node_modules/,
         },
         {

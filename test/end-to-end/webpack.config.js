@@ -12,20 +12,20 @@ async function getHttpsOptions() {
 }
 
 module.exports = async (env, options) => {
-  // const dev = options.mode === "development";
+
   const config = {
     devtool: "source-map",
     entry: {
       polyfill: ["core-js/stable", "regenerator-runtime/runtime"],
-      vendor: ["react", "react-dom", "core-js", "@fluentui/react"],
-      taskpane: ["react-hot-loader/patch", path.resolve(__dirname, "./src/test.index.tsx"), path.resolve(__dirname, "./src/test-taskpane.html")],
+      vendor: ["react", "react-dom", "core-js", "@fluentui/react-components", "@fluentui/react-icons"],
+      taskpane: [path.resolve(__dirname, "./src/test.index.tsx"), path.resolve(__dirname, "./src/test-taskpane.html")],
     },
     output: {
       path: path.resolve(__dirname, "testBuild"),
       clean: true,
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".html", ".js"],
+      extensions: [".ts", ".tsx", ".html", ".js", ".jsx"],
       fallback: {
         child_process: false,
         fs: false,
@@ -37,7 +37,6 @@ module.exports = async (env, options) => {
         {
           test: /\.jsx?$/,
           use: [
-            "react-hot-loader/webpack",
             {
               loader: "babel-loader",
               options: {
@@ -47,9 +46,20 @@ module.exports = async (env, options) => {
           ],
           exclude: /node_modules/,
         },
+
+        {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-typescript"],
+            },
+          },
+        },
         {
           test: /\.tsx?$/,
-          use: ["react-hot-loader/webpack", "ts-loader"],
+          use: ["ts-loader"],
           exclude: /node_modules/,
         },
         {
@@ -76,13 +86,10 @@ module.exports = async (env, options) => {
         template: path.resolve(__dirname, "./src/test-taskpane.html"),
         chunks: ["taskpane", "vendor", "polyfill"],
       }),
-      new webpack.ProvidePlugin({
-        Promise: ["es6-promise", "Promise"],
-      }),
       new CopyWebpackPlugin({
         patterns: [
           {
-            from: "assets/icon-*",
+            from: "assets/*",
             to: "assets/[name][ext][query]",
           },
         ],
