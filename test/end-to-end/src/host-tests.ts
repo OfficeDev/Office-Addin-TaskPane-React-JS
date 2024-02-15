@@ -11,7 +11,7 @@ let testValues: any = [];
 export const testExcelEnd2End = async (testServerPort: number): Promise<void> => {
   try {
     // Execute taskpane code
-    insertExcelText("Hello Excel End2End Test");
+    await insertExcelText("Hello Excel End2End Test");
     await testHelpers.sleep(2000);
 
     // Get output of executed taskpane code
@@ -28,15 +28,18 @@ export const testExcelEnd2End = async (testServerPort: number): Promise<void> =>
       await testHelpers.closeWorkbook();
       Promise.resolve();
     });
-  } catch {
+  } catch (error) {
+    testHelpers.addTestResult(testValues, "output-message", getErrorMessage(error), "");
+    await sendTestResults(testValues, testServerPort);
+    testValues.pop();
     Promise.reject();
   }
-}
+};
 
 export const testPowerPointEnd2End = async (testServerPort: number): Promise<void> => {
   try {
     // Execute taskpane code
-    insertPowerPointText("Hello PowerPoint End2End Test");
+    await insertPowerPointText("Hello PowerPoint End2End Test");
     await testHelpers.sleep(2000);
 
     // Get output of executed taskpane code
@@ -44,10 +47,9 @@ export const testPowerPointEnd2End = async (testServerPort: number): Promise<voi
       // get text from selected text shape
       const shapes = context.presentation.getSelectedShapes();
       const shape = shapes.getItemAt(0);
-      const textFrame = shape.textFrame.load("textRange");
-      textFrame.textRange.load("text");
+      const textRange = shape.textFrame.textRange.load("text");
       await context.sync();
-      const selectedText = textFrame.textRange.text;
+      const selectedText = textRange.text;
 
       // send test results
       testHelpers.addTestResult(testValues, "output-message", selectedText, "Hello PowerPoint End2End Test");
@@ -55,15 +57,18 @@ export const testPowerPointEnd2End = async (testServerPort: number): Promise<voi
       testValues.pop();
       Promise.resolve();
     });
-  } catch {
+  } catch (error) {
+    testHelpers.addTestResult(testValues, "output-message", getErrorMessage(error), "");
+    await sendTestResults(testValues, testServerPort);
+    testValues.pop();
     Promise.reject();
   }
-}
+};
 
 export const testWordEnd2End = async (testServerPort: number): Promise<void> => {
   try {
     // Execute taskpane code
-    insertWordText("Hello Word End2End Test");
+    await insertWordText("Hello Word End2End Test");
     await testHelpers.sleep(2000);
 
     // Get output of executed taskpane code
@@ -79,7 +84,22 @@ export const testWordEnd2End = async (testServerPort: number): Promise<void> => 
       testValues.pop();
       Promise.resolve();
     });
-  } catch {
+  } catch (error) {
+    testHelpers.addTestResult(testValues, "output-message", getErrorMessage(error), "");
+    await sendTestResults(testValues, testServerPort);
+    testValues.pop();
     Promise.reject();
   }
-}
+};
+
+const getErrorMessage = (error: any): string => {
+  if (error instanceof Error) {
+    if ("stack" in error) {
+      return error.stack;
+    } else {
+      return `${error.name}: ${error.message}`;
+    }
+  } else {
+    return error;
+  }
+};
