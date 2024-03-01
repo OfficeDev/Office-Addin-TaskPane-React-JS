@@ -35,7 +35,7 @@
         "start:desktop",
         "--",
         "--app",
-        "excel",
+        "excel"
       ],
       "presentation": {
         "clear": true,
@@ -52,7 +52,7 @@
         "start:desktop",
         "--",
         "--app",
-        "powerpoint",
+        "powerpoint"
       ],
       "presentation": {
         "clear": true,
@@ -69,7 +69,7 @@
         "start:desktop",
         "--",
         "--app",
-        "word",
+        "word"
       ],
       "presentation": {
         "clear": true,
@@ -77,7 +77,6 @@
       },
       "problemMatcher": []
     },
-
     {
       "label": "Debug: Outlook Desktop",
       "type": "shell",
@@ -87,11 +86,11 @@
         "start:desktop",
         "--",
         "--app",
-        "outlook",
+        "outlook"
       ],
       "presentation": {
         "clear": true,
-        "panel": "dedicated",
+        "panel": "dedicated"
       },
       "problemMatcher": []
     },
