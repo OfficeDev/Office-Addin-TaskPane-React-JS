@@ -32,7 +32,7 @@ async function modifyProjectForSingleHost(host) {
   }
   await convertProjectToSingleHost(host);
   await updatePackageJsonForSingleHost(host);
-  await updateLaunchJsonFile();
+  await updateLaunchJsonFile(host);
 }
 
 async function convertProjectToSingleHost(host) {
@@ -119,12 +119,20 @@ async function updatePackageJsonForSingleHost(host) {
   await writeFileAsync(packageJson, JSON.stringify(content, null, 2));
 }
 
-async function updateLaunchJsonFile() {
+async function updateLaunchJsonFile(host) {
   // Remove 'Debug Tests' configuration from launch.json
   const launchJson = `.vscode/launch.json`;
   const launchJsonContent = await readFileAsync(launchJson, "utf8");
   const regex = /(.+{\r?\n.*"name": "Debug (?:UI|Unit) Tests",\r?\n(?:.*\r?\n)*?.*},.*\r?\n)/gm;
-  const updatedContent = launchJsonContent.replace(regex, "");
+  var updatedContent = launchJsonContent.replace(regex, "");
+  // Only keep host configuration
+  for (index in hosts) {
+    if (hosts[index] === host)
+      continue;
+    const hostName = getHostName(hosts[index]);
+    const hostRegex = new RegExp(`(.+{\\r?\\n.*\"name\": \"${hostName} Desktop \\(Edge (?:Chromium|Legacy)\\)\",\\r?\\n(?:.*\\r?\\n)*?.*},.*\\r?\\n)`, 'gm');
+    updatedContent = updatedContent.replace(hostRegex, "");
+  }
   await writeFileAsync(launchJson, updatedContent);
 }
 

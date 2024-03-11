@@ -126,6 +126,6 @@
       "webRoot": "${workspaceRoot}",
       "preLaunchTask": "Debug: Word Desktop",
       "postDebugTask": "Stop Debug"
-    }
+    },
   ]
 }
