@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button, Field, Textarea, tokens, makeStyles } from "@fluentui/react-components";
-import { insertWordText, insertExcelText, insertPowerPointText, insertOutlookText } from "../office-document";
+import { selectInsertionByHost } from "../../host-relative-text-insertion";
 
 const useStyles = makeStyles({
   instructions: {
@@ -36,36 +36,6 @@ const TextInsertion = () => {
   };
 
   const styles = useStyles();
-
-  const selectInsertionByHost = async () => {
-    let insertText;
-
-    await Office.onReady(async (info) => {
-      switch (info.host) {
-        case Office.HostType.Excel: {
-          insertText = insertExcelText;
-          break;
-        }
-        case Office.HostType.PowerPoint: {
-          insertText = insertPowerPointText;
-          break;
-        }
-        case Office.HostType.Word: {
-          insertText = insertWordText;
-          break;
-        }
-        case Office.HostType.Outlook: {
-          insertText = insertOutlookText;
-          break;
-        }
-        default: {
-          throw new Error("There is no end-to-end test for that host.");
-        }
-      }
-    });
-
-    return insertText;
-  };
 
   return (
     <div className={styles.textPromptAndInsertion}>
