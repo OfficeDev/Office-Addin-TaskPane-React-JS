@@ -123,17 +123,11 @@ async function updateLaunchJsonFile(host) {
   // Remove 'Debug Tests' configuration from launch.json
   const launchJson = `.vscode/launch.json`;
   const launchJsonContent = await readFileAsync(launchJson, "utf8");
-  const regex = /(.+{\r?\n.*"name": "Debug (?:UI|Unit) Tests",\r?\n(?:.*\r?\n)*?.*},.*\r?\n)/gm;
-  var updatedContent = launchJsonContent.replace(regex, "");
-  // Only keep host configuration
-  for (index in hosts) {
-    if (hosts[index] === host)
-      continue;
-    const hostName = getHostName(hosts[index]);
-    const hostRegex = new RegExp(`(.+{\\r?\\n.*\"name\": \"${hostName} Desktop \\(Edge (?:Chromium|Legacy)\\)\",\\r?\\n(?:.*\\r?\\n)*?.*},.*\\r?\\n)`, 'gm');
-    updatedContent = updatedContent.replace(hostRegex, "");
-  }
-  await writeFileAsync(launchJson, updatedContent);
+  let content = JSON.parse(launchJsonContent);
+  content.configurations = content.configurations.filter(function (config) {
+    return config.name.startsWith(getHostName(host));
+  });
+  await writeFileAsync(launchJson, JSON.stringify(content, null, 2));
 }
 
 function getHostName(host) {
