@@ -44,6 +44,23 @@
       "problemMatcher": []
     },
     {
+      "label": "Debug: Outlook Desktop",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "start:desktop",
+        "--",
+        "--app",
+        "outlook"
+      ],
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Debug: PowerPoint Desktop",
       "type": "shell",
       "command": "npm",
@@ -70,23 +87,6 @@
         "--",
         "--app",
         "word"
-      ],
-      "presentation": {
-        "clear": true,
-        "panel": "dedicated"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Debug: Outlook Desktop",
-      "type": "shell",
-      "command": "npm",
-      "args": [
-        "run",
-        "start:desktop",
-        "--",
-        "--app",
-        "outlook"
       ],
       "presentation": {
         "clear": true,
