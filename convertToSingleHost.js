@@ -63,12 +63,12 @@ async function convertProjectToSingleHost(host) {
     await unlinkFileAsync(`./manifest.${host}.xml`);
     await unlinkFileAsync(`./src/taskpane/${getHostName(host)}-office-document.js`);
   });
-  
+
   await unlinkFileAsync(`./src/host-relative-text-insertion.js`);
 
   // Delete test folder
   deleteFolder(path.resolve(`./test`));
-  
+
   // Delete the .github folder
   deleteFolder(path.resolve(`./.github`));
 
@@ -93,10 +93,7 @@ async function updatePackageJsonForSingleHost(host) {
 
   // Remove scripts that are unrelated to the selected host
   Object.keys(content.scripts).forEach(function (key) {
-    if (
-      key === "convert-to-single-host" ||
-      key === "start:desktop:outlook"
-    ) {
+    if (key === "convert-to-single-host" || key === "start:desktop:outlook") {
       delete content.scripts[key];
     }
   });
@@ -120,7 +117,7 @@ async function updatePackageJsonForSingleHost(host) {
 }
 
 async function updateLaunchJsonFile(host) {
-  // Remove 'Debug Tests' configuration from launch.json
+  // Remove unneeded configuration from launch.json
   const launchJson = `.vscode/launch.json`;
   const launchJsonContent = await readFileAsync(launchJson, "utf8");
   let content = JSON.parse(launchJsonContent);
@@ -192,10 +189,6 @@ async function updatePackageJsonForXMLManifest() {
   const packageJson = `./package.json`;
   const data = await readFileAsync(packageJson, "utf8");
   let content = JSON.parse(data);
-
-  // Remove scripts that are only used with JSON manifest
-  delete content.scripts["signin"];
-  delete content.scripts["signout"];
 
   // Write updated JSON to file
   await writeFileAsync(packageJson, JSON.stringify(content, null, 2));
