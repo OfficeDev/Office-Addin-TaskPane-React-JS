@@ -40,31 +40,34 @@ async function convertProjectToSingleHost(host) {
   const manifestContent = await readFileAsync(`./manifest.${host}.xml`, "utf8");
   await writeFileAsync(`./manifest.xml`, manifestContent);
 
-  // Copy host-specific office-document.js over src/office-document.js
+  // Copy host-specific office-document.ts over src/office-document.ts
   const hostName = getHostName(host);
-  const srcContent = await readFileAsync(`./src/taskpane/${hostName}-office-document.js`, 'utf8');
-  await writeFileAsync(`./src/taskpane/office-document.js`, srcContent);  
+  const srcContent = await readFileAsync(`./src/taskpane/${hostName}-office-document.ts`, "utf8");
+  await writeFileAsync(`./src/taskpane/office-document.ts`, srcContent);
 
   // Remove code from the TextInsertion component that is needed only for tests or
   // that is host-specific.
-  const originalTextInsertionComponentContent = await readFileAsync(`./src/taskpane/components/TextInsertion.jsx`, "utf8");
+  const originalTextInsertionComponentContent = await readFileAsync(
+    `./src/taskpane/components/TextInsertion.tsx`,
+    "utf8"
+  );
   let updatedTextInsertionComponentContent = originalTextInsertionComponentContent.replace(
-    `import { selectInsertionByHost } from "../../host-relative-text-insertion";`, 
+    `import { selectInsertionByHost } from "../../host-relative-text-insertion";`,
     `import insertText from "../office-document";`
   );
   updatedTextInsertionComponentContent = updatedTextInsertionComponentContent.replace(
-    `const insertText = await selectInsertionByHost();`, 
+    `const insertText = await selectInsertionByHost();`,
     ``
   );
-  await writeFileAsync(`./src/taskpane/components/TextInsertion.jsx`, updatedTextInsertionComponentContent);
+  await writeFileAsync(`./src/taskpane/components/TextInsertion.tsx`, updatedTextInsertionComponentContent);
 
   // Delete all host-specific files
   hosts.forEach(async function (host) {
     await unlinkFileAsync(`./manifest.${host}.xml`);
-    await unlinkFileAsync(`./src/taskpane/${getHostName(host)}-office-document.js`);
+    await unlinkFileAsync(`./src/taskpane/${getHostName(host)}-office-document.ts`);
   });
 
-  await unlinkFileAsync(`./src/host-relative-text-insertion.js`);
+  await unlinkFileAsync(`./src/host-relative-text-insertion.ts`);
 
   // Delete test folder
   deleteFolder(path.resolve(`./test`));
@@ -277,18 +280,17 @@ modifyProjectForSingleHost(host).catch((err) => {
 
 let manifestPath = "manifest.xml";
 
-// Uncomment when this template supports JSON manifest
-// if (host !== "outlook" || manifestType !== "json") {
+if (host !== "outlook" || manifestType !== "json") {
 // Remove things that are only relevant to JSON manifest
 deleteJSONManifestRelatedFiles();
 updatePackageJsonForXMLManifest();
-// } else {
-//   manifestPath = "manifest.json";
-//   modifyProjectForJSONManifest().catch((err) => {
-//     console.error(`Error modifying for JSON manifest: ${err instanceof Error ? err.message : err}`);
-//     process.exitCode = 1;
-//   });
-// }
+} else {
+  manifestPath = "manifest.json";
+  modifyProjectForJSONManifest().catch((err) => {
+    console.error(`Error modifying for JSON manifest: ${err instanceof Error ? err.message : err}`);
+    process.exitCode = 1;
+  });
+}
 
 if (projectName) {
   if (!appId) {
