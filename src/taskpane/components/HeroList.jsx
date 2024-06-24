@@ -51,8 +51,13 @@ const HeroList = (props) => {
 };
 
 HeroList.propTypes = {
-  items: PropTypes.array,
-  message: PropTypes.string,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      icon: PropTypes.element.isRequired,
+      primaryText: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 export default HeroList;

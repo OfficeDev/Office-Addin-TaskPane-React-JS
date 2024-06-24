@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button, Field, Textarea, tokens, makeStyles } from "@fluentui/react-components";
-import { selectInsertionByHost } from "../../host-relative-text-insertion";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   instructions: {
@@ -23,12 +23,11 @@ const useStyles = makeStyles({
   },
 });
 
-const TextInsertion = () => {
+const TextInsertion = (props) => {
   const [text, setText] = useState("Some text.");
 
   const handleTextInsertion = async () => {
-    const insertText = await selectInsertionByHost();
-    await insertText(text);
+    await props.insertText(text);
   };
 
   const handleTextChange = async (event) => {
@@ -48,6 +47,10 @@ const TextInsertion = () => {
       </Button>
     </div>
   );
+};
+
+TextInsertion.propTypes = {
+  insertText: PropTypes.func.isRequired,
 };
 
 export default TextInsertion;

@@ -1,6 +1,6 @@
 /* global OneNote console */
 
-const insertText = async (text) => {
+export async function insertText(text) {
   // Write text to the title.
   try {
     await OneNote.run(async (context) => {
@@ -11,6 +11,4 @@ const insertText = async (text) => {
   } catch (error) {
     console.log("Error: " + error);
   }
-};
-
-export default insertText;
+}
