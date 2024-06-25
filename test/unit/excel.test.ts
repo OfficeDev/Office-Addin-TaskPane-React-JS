@@ -12,7 +12,7 @@ const ExcelMockData = {
         range: {
           values: [[" "]],
           format: {
-            autoFitColumns: function () {},
+            autofitColumns: function () {},
           },
         },
         getRange: function () {
