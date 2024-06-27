@@ -1,15 +1,28 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* global require, process, console */
 
 const fs = require("fs");
 const path = require("path");
 const util = require("util");
 const childProcess = require("child_process");
+const hosts = ["excel", "onenote", "outlook", "powerpoint", "project", "word"];
+
+if (process.argv.length <= 2) {
+  const hostList = hosts.map((host) => `'${host}'`).join(", ");
+  console.log("SYNTAX: convertToSingleHost.js <host> <manifestType> <projectName> <appId>");
+  console.log();
+  console.log(`  host (required): Specifies which Office app will host the add-in: ${hostList}`);
+  console.log(`  manifestType: Specify the type of manifest to use: 'xml' or 'json'.  Defaults to 'xml'`);
+  console.log(`  projectName: The name of the project (use quotes when there are spaces in the name). Defaults to 'My Office Add-in'`);
+  console.log(`  appId: The id of the project or 'random' to generate one.  Defaults to 'random'`);
+  console.log();
+  process.exit(1);
+}
 
 const host = process.argv[2];
 const manifestType = process.argv[3];
 const projectName = process.argv[4];
 let appId = process.argv[5];
-const hosts = ["excel", "onenote", "outlook", "powerpoint", "project", "word"];
 const testPackages = [
   "@types/mocha",
   "@types/node",
@@ -42,29 +55,13 @@ async function convertProjectToSingleHost(host) {
 
   // Copy host-specific office-document.js over src/office-document.js
   const hostName = getHostName(host);
-  const srcContent = await readFileAsync(`./src/taskpane/${hostName}-office-document.js`, 'utf8');
-  await writeFileAsync(`./src/taskpane/office-document.js`, srcContent);
-
-  // Remove code from the TextInsertion component that is needed only for tests or
-  // that is host-specific.
-  const originalTextInsertionComponentContent = await readFileAsync(`./src/taskpane/components/TextInsertion.jsx`, "utf8");
-  let updatedTextInsertionComponentContent = originalTextInsertionComponentContent.replace(
-    `import { selectInsertionByHost } from "../../host-relative-text-insertion";`,
-    `import insertText from "../office-document";`
-  );
-  updatedTextInsertionComponentContent = updatedTextInsertionComponentContent.replace(
-    `const insertText = await selectInsertionByHost();`,
-    ``
-  );
-  await writeFileAsync(`./src/taskpane/components/TextInsertion.jsx`, updatedTextInsertionComponentContent);
-
+  const srcContent = await readFileAsync(`./src/taskpane/${hostName}.js`, "utf8");
+  await writeFileAsync(`./src/taskpane/taskpane.js`, srcContent);
   // Delete all host-specific files
   hosts.forEach(async function (host) {
     await unlinkFileAsync(`./manifest.${host}.xml`);
-    await unlinkFileAsync(`./src/taskpane/${getHostName(host)}-office-document.js`);
+    await unlinkFileAsync(`./src/taskpane/${getHostName(host)}.js`);
   });
-
-  await unlinkFileAsync(`./src/host-relative-text-insertion.js`);
 
   // Delete test folder
   deleteFolder(path.resolve(`./test`));
