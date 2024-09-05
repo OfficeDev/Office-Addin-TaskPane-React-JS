@@ -12,7 +12,6 @@ async function getHttpsOptions() {
 }
 
 module.exports = async (env, options) => {
-
   const config = {
     devtool: "source-map",
     entry: {
@@ -68,7 +67,7 @@ module.exports = async (env, options) => {
           use: "html-loader",
         },
         {
-          test: /\.(png|jpg|jpeg|gif|ico)$/,
+          test: /\.(png|jpg|jpeg|ttf|woff|woff2|gif|ico)$/,
           type: "asset/resource",
           generator: {
             filename: "assets/[name][ext][query]",
@@ -84,7 +83,7 @@ module.exports = async (env, options) => {
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
         template: path.resolve(__dirname, "./src/test-taskpane.html"),
-        chunks: ["taskpane", "vendor", "polyfill"],
+        chunks: ["polyfill", "vendor", "taskpane"],
       }),
       new CopyWebpackPlugin({
         patterns: [
