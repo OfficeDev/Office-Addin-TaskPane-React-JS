@@ -45,5 +45,3 @@ if ((module as any).hot) {
     root.render(NextApp);
   });
 }
-
-
