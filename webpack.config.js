@@ -35,9 +35,6 @@ module.exports = async (env, options) => {
           test: /\.jsx?$/,
           use: {
             loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env"],
-            },
           },
           exclude: /node_modules/,
         },
@@ -56,6 +53,11 @@ module.exports = async (env, options) => {
       ],
     },
     plugins: [
+      new HtmlWebpackPlugin({
+        filename: "taskpane.html",
+        template: "./src/taskpane/taskpane.html",
+        chunks: ["polyfill", "vendor", "taskpane"],
+      }),
       new CopyWebpackPlugin({
         patterns: [
           {
@@ -76,14 +78,9 @@ module.exports = async (env, options) => {
         ],
       }),
       new HtmlWebpackPlugin({
-        filename: "taskpane.html",
-        template: "./src/taskpane/taskpane.html",
-        chunks: ["polyfill", "vendor", "taskpane"],
-      }),
-      new HtmlWebpackPlugin({
         filename: "commands.html",
         template: "./src/commands/commands.html",
-        chunks: ["commands"],
+        chunks: ["polyfill", "commands"],
       }),
       new webpack.ProvidePlugin({
         Promise: ["es6-promise", "Promise"],
