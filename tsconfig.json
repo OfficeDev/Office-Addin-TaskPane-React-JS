@@ -7,7 +7,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "module": "CommonJS",
+    "module": "ES2020",
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "noUnusedParameters": true,
@@ -30,6 +30,9 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "ts-node": { 
+    "compilerOptions": {
+      "module": "commonjs"
+    },
     "files": true 
   }
 }
