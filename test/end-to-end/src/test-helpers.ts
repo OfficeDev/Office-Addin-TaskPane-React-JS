@@ -44,7 +44,7 @@ export async function closeDesktopApplication(application: string): Promise<bool
 
 export async function closeWorkbook(): Promise<void> {
   await sleep(1000);
-  await Excel.run(async (context) => context.workbook.close(Excel.CloseBehavior.skipSave));
+  await Excel.run(async (context: Excel.RequestContext) => context.workbook.close(Excel.CloseBehavior.skipSave));
 }
 
 export type TestResult = {

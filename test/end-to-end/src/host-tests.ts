@@ -72,7 +72,7 @@ export const testWordEnd2End = async (testServerPort: number): Promise<void> => 
     await testHelpers.sleep(2000);
 
     // Get output of executed taskpane code
-    await Word.run(async (context) => {
+    await Word.run(async (context: Word.RequestContext) => {
       var firstParagraph = context.document.body.paragraphs.getFirst();
       firstParagraph.load("text");
       await context.sync();
