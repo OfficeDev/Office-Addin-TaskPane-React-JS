@@ -5,25 +5,32 @@ import { insertText } from "../../src/taskpane/word";
 
 /* global describe, global, it, Word */
 
-const WordMockData = {
-  context: {
-    document: {
-      body: {
-        paragraph: {
-          text: "",
-        },
-        insertParagraph: function (paragraphText: string, insertLocation: Word.InsertLocation): Word.Paragraph {
-          this.paragraph.text = paragraphText;
-          this.paragraph.insertLocation = insertLocation;
-          return this.paragraph;
-        },
+type MockParagraph = {
+  text: string;
+  insertLocation?: string;
+};
+
+const wordMockContext = {
+  document: {
+    body: {
+      paragraph: {
+        text: "",
+      } as MockParagraph,
+      insertParagraph: function (paragraphText: string, insertLocation: string): MockParagraph {
+        this.paragraph.text = paragraphText;
+        this.paragraph.insertLocation = insertLocation;
+        return this.paragraph;
       },
     },
   },
+};
+
+const WordMockData = {
+  context: wordMockContext,
   InsertLocation: {
     end: "End",
   },
-  run: async function (callback) {
+  run: async function (callback: (context: typeof wordMockContext) => Promise<void> | void) {
     await callback(this.context);
   },
 };
