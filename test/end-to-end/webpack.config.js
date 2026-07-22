@@ -47,19 +47,14 @@ module.exports = async (env, options) => {
         },
 
         {
-          test: /\.ts$/,
+          test: /\.tsx?$/,
           exclude: /node_modules/,
           use: {
             loader: "babel-loader",
             options: {
-              presets: ["@babel/preset-typescript"],
+              presets: ["@babel/preset-typescript", "@babel/preset-react"],
             },
           },
-        },
-        {
-          test: /\.tsx?$/,
-          use: ["ts-loader"],
-          exclude: /node_modules/,
         },
         {
           test: /\.html$/,
