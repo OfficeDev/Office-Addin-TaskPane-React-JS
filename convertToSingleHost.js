@@ -184,6 +184,7 @@ async function deleteSupportFiles() {
   await unlinkFileAsync("./convertToSingleHost.js");
   await unlinkFileAsync(".npmrc");
   await unlinkFileAsync("package-lock.json");
+  await unlinkFileAsync("jsconfig.json"); // used only for distinguishing between js and ts projects
 }
 
 async function deleteJSONManifestRelatedFiles() {

@@ -5,33 +5,40 @@ import { insertText } from "../../src/taskpane/powerpoint";
 
 /* global describe, global, it */
 
-const shapes = [];
+type MockTextShape = {
+  text: string;
+};
+
+const shapes: MockTextShape[] = [];
 const selectedSlide = {
   shapes: {
-    addTextBox: function (text) {
-      const shape = { text };
+    addTextBox: function (text: string) {
+      const shape: MockTextShape = { text };
       shapes.push(shape);
     },
     items: shapes,
   },
 };
-const PowerPointMockData = {
-  context: {
-    presentation: {
-      getSelectedSlides: function () {
-        return {
-          getItemAt: function () {
-            return selectedSlide;
-          },
-        };
-      },
-    },
-    slides: {
-      items: [selectedSlide],
+
+const powerpointMockContext = {
+  presentation: {
+    getSelectedSlides: function () {
+      return {
+        getItemAt: function () {
+          return selectedSlide;
+        },
+      };
     },
   },
+  slides: {
+    items: [selectedSlide],
+  },
+};
+
+const PowerPointMockData = {
+  context: powerpointMockContext,
   onReady: async function () {},
-  run: async function (callback) {
+  run: async function (callback: (context: typeof powerpointMockContext) => Promise<void> | void) {
     await callback(this.context);
   },
 };

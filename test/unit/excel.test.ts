@@ -5,26 +5,28 @@ import { insertText } from "../../src/taskpane/excel";
 
 /* global describe, global, it */
 
-const ExcelMockData = {
-  context: {
-    workbook: {
-      worksheets: {
-        range: {
-          values: [[" "]],
-          format: {
-            autofitColumns: function () {},
-          },
+const excelMockContext = {
+  workbook: {
+    worksheets: {
+      range: {
+        values: [[" "]],
+        format: {
+          autofitColumns: function () {},
         },
-        getRange: function () {
-          return this.range;
-        },
-        getActiveWorksheet: function () {
-          return this;
-        },
+      },
+      getRange: function () {
+        return this.range;
+      },
+      getActiveWorksheet: function () {
+        return this;
       },
     },
   },
-  run: async function (callback) {
+};
+
+const ExcelMockData = {
+  context: excelMockContext,
+  run: async function (callback: (context: typeof excelMockContext) => Promise<void> | void) {
     await callback(this.context);
   },
 };
