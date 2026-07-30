@@ -24,7 +24,7 @@ module.exports = async (env, options) => {
       clean: true,
     },
     resolve: {
-      extensions: [".ts", ".tsx", ".html", ".js", ".jsx"],
+      extensions: [".ts", ".tsx", ".js", ".jsx", ".html"],
       fallback: {
         child_process: false,
       },
