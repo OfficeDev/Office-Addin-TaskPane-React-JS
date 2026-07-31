@@ -36,6 +36,20 @@ const readFileAsync = util.promisify(fs.readFile);
 const unlinkFileAsync = util.promisify(fs.unlink);
 const writeFileAsync = util.promisify(fs.writeFile);
 
+// JSON.stringify is recursive and throws a "Maximum call stack size exceeded" RangeError on
+// extremely deeply nested input. Catch that here and rethrow a clear, actionable message that
+// names the file being written.
+function stringifyJson(content, fileName) {
+  try {
+    return JSON.stringify(content, null, 2);
+  } catch (err) {
+    if (err instanceof RangeError) {
+      throw new Error(`Unable to update "${fileName}": its JSON content is too deeply nested.`);
+    }
+    throw err;
+  }
+}
+
 async function modifyProjectForSingleHost(host) {
   if (!host) {
     throw new Error("The host was not provided.");
@@ -110,7 +124,7 @@ async function updatePackageJsonForSingleHost(host) {
   });
 
   // Write updated JSON to file
-  await writeFileAsync(packageJson, JSON.stringify(content, null, 2));
+  await writeFileAsync(packageJson, stringifyJson(content, packageJson));
 }
 
 async function updateLaunchJsonFile(host) {
@@ -121,7 +135,7 @@ async function updateLaunchJsonFile(host) {
   content.configurations = content.configurations.filter(function (config) {
     return config.name.startsWith(getHostName(host));
   });
-  await writeFileAsync(launchJson, JSON.stringify(content, null, 2));
+  await writeFileAsync(launchJson, stringifyJson(content, launchJson));
 }
 
 function getHostName(host) {
@@ -170,6 +184,7 @@ async function deleteSupportFiles() {
   await unlinkFileAsync("./convertToSingleHost.js");
   await unlinkFileAsync(".npmrc");
   await unlinkFileAsync("package-lock.json");
+  await unlinkFileAsync("jsconfig.json"); // used only for distinguishing between js and ts projects
 }
 
 async function deleteJSONManifestRelatedFiles() {
@@ -188,7 +203,7 @@ async function updatePackageJsonForXMLManifest() {
   let content = JSON.parse(data);
 
   // Write updated JSON to file
-  await writeFileAsync(packageJson, JSON.stringify(content, null, 2));
+  await writeFileAsync(packageJson, stringifyJson(content, packageJson));
 }
 
 async function updatePackageJsonForJSONManifest() {
@@ -202,7 +217,7 @@ async function updatePackageJsonForJSONManifest() {
   content.scripts.validate = "office-addin-manifest validate manifest.json";
 
   // Write updated JSON to file
-  await writeFileAsync(packageJson, JSON.stringify(content, null, 2));
+  await writeFileAsync(packageJson, stringifyJson(content, packageJson));
 }
 
 async function updateTasksJsonFileForJSONManifest() {
@@ -239,7 +254,7 @@ async function updateTasksJsonFileForJSONManifest() {
   };
 
   content.tasks.push(checkOSTask);
-  await writeFileAsync(tasksJson, JSON.stringify(content, null, 2));
+  await writeFileAsync(tasksJson, stringifyJson(content, tasksJson));
 }
 
 async function updateWebpackConfigForJSONManifest() {
